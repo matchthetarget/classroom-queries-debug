@@ -1,0 +1,61 @@
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h1>
+      Student #<%= @student.id %> details
+    </h1>
+
+    <div class="row mb-3">
+      <div class="col">
+        <a href="/students" class="btn btn-block btn-outline-secondary">
+          Go back
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        First name
+      </dt>
+      <dd>
+        <%= @student.first_name %>
+      </dd>
+
+      <dt>
+        Last name
+      </dt>
+      <dd>
+        <%= @student.last_name %>
+      </dd>
+
+      <dt>
+        Email
+      </dt>
+      <dd>
+        <%= @student.email %>
+      </dd>
+
+      <dt>
+        Number of courses
+      </dt>
+      <dd>
+        <%= Enrollment.where({ :student_id => @student.id }).count %>
+      </dd>
+    </dl>
+  </div>
+</div>
+
+
+<hr>
+
+<h3>Course Load</h3>
+<ul>
+  <% enrollments = Enrollment.where({:student_id => @student.id }) %>
+  <% enrollments.each do |enrollment| %>
+    <li>
+      <% course = Course.where({ :id => enrollment.course_id }).at(0) %>
+      <a href="/courses/<%= course.id %>">
+        <%= course.title %>
+      </a>
+    </li>
+  <% end %>
+</ul>
