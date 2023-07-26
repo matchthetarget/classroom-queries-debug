@@ -126,15 +126,11 @@ describe "/students" do
 end
 
 describe "/students/[STUDENT ID]" do
-  it "displays the number of courses the Student is enrolled in", points: 1 do
+  it "displays the titles of the courses the Student is enrolled in an unstructured list", points: 1 do
     
     english = Department.new
     english.name = "English"
     english.save
-
-    technology = Department.new
-    technology.name = "Technology"
-    technology.save
 
     poetry = Course.new
     poetry.title = "Poetry"
@@ -142,18 +138,6 @@ describe "/students/[STUDENT ID]" do
     poetry.department_id = english.id
     poetry.save
     
-    algorithms = Course.new
-    algorithms.title = "Algorithms"
-    algorithms.term_offered = "Spring"
-    algorithms.department_id = technology.id
-    algorithms.save
-    
-    american_writing = Course.new
-    american_writing.title = "American Writing"
-    american_writing.term_offered = "Spring"
-    american_writing.department_id = english.id
-    american_writing.save
-
     franny = Student.new
     franny.first_name = "Franny"
     franny.last_name = "Choi"
@@ -165,97 +149,10 @@ describe "/students/[STUDENT ID]" do
     franny_in_poetry.student_id = franny.id
     franny_in_poetry.save
 
-    franny_in_algorithms = Enrollment.new
-    franny_in_algorithms.course_id = algorithms.id
-    franny_in_algorithms.student_id = franny.id
-    franny_in_algorithms.save
-
-    franny_in_american_writing = Enrollment.new
-    franny_in_american_writing.course_id = american_writing.id
-    franny_in_american_writing.student_id = franny.id
-    franny_in_american_writing.save
-
     visit "/students/#{franny.id}"
 
-    expect(page).to have_text(/number of courses\s*3/i),
-      "Expected to find text, 'Number of courses 3', but didn't find it."
-
-  end
-end
-
-describe "/students/[STUDENT ID]" do
-  it "displays the titles of the courses the Student is enrolled in", points: 1 do
-    
-    english = Department.new
-    english.name = "English"
-    english.save
-
-    technology = Department.new
-    technology.name = "Technology"
-    technology.save
-
-    poetry = Course.new
-    poetry.title = "Poetry"
-    poetry.term_offered = "Winter"
-    poetry.department_id = english.id
-    poetry.save
-
-    essay_writing = Course.new
-    essay_writing.title = "Essay Writing"
-    essay_writing.term_offered = "Winter"
-    essay_writing.department_id = english.id
-    essay_writing.save
-    
-    algorithms = Course.new
-    algorithms.title = "Algorithms"
-    algorithms.term_offered = "Spring"
-    algorithms.department_id = technology.id
-    algorithms.save
-    
-    american_writing = Course.new
-    american_writing.title = "American Writing"
-    american_writing.term_offered = "Spring"
-    american_writing.department_id = english.id
-    american_writing.save
-
-    franny = Student.new
-    franny.first_name = "Franny"
-    franny.last_name = "Choi"
-    franny.email = "franny@edu.edu"
-    franny.save
-
-    fatimah = Student.new
-    fatimah.first_name = "Fatimah"
-    fatimah.last_name = "Alattas"
-    fatimah.email = "fatimah@edu.edu"
-    fatimah.save
-
-    franny_in_poetry = Enrollment.new
-    franny_in_poetry.course_id = poetry.id
-    franny_in_poetry.student_id = franny.id
-    franny_in_poetry.save
-
-    fatimah_in_essay_writing = Enrollment.new
-    fatimah_in_essay_writing.course_id = essay_writing.id
-    fatimah_in_essay_writing.student_id = fatimah.id
-    fatimah_in_essay_writing.save
-
-    franny_in_algorithms = Enrollment.new
-    franny_in_algorithms.course_id = algorithms.id
-    franny_in_algorithms.student_id = franny.id
-    franny_in_algorithms.save
-
-    franny_in_american_writing = Enrollment.new
-    franny_in_american_writing.course_id = american_writing.id
-    franny_in_american_writing.student_id = franny.id
-    franny_in_american_writing.save
-
-    visit "/students/#{franny.id}"
-
-    expect(page).to_not have_text("Essay Writing")
-    expect(page).to have_text("Poetry")
-    expect(page).to have_text("Algorithms")
-    expect(page).to have_text("American Writing")
+    expect(page).to have_tag("a", :with => { :href => "/courses/#{poetry.id}" }, :text => /Poetry/i),
+      "Expected page to have the a link with the text 'Poetry' and an href of '/courses/#{poetry.id}'"
 
   end
 end
