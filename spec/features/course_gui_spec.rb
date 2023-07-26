@@ -108,7 +108,7 @@ describe "/delete_course/[COURSE ID]" do
 
     visit "/delete_course/#{course.id}"
 
-    expect(course.exists?(course.id)).to be(false)
+    expect(Course.exists?(course.id)).to be(false)
   end
 end
 
@@ -151,7 +151,7 @@ describe "/courses/[COURSE ID]" do
 end
 
 describe "/courses/[COURSE ID]" do
-  it "has a label with text 'Image'", :points => 1, hint: h("copy_must_match label_for_input") do
+  it "has a label with text 'Title'", :points => 1, hint: h("copy_must_match label_for_input") do
  
     department = Department.new
     department.name = "Math"
@@ -161,12 +161,11 @@ describe "/courses/[COURSE ID]" do
     course.title = "Calculus"
     course.term_offered = "Winter"
     course.department_id = department.id
-    course.image = "https://some.test/image-#{Time.now.to_i}.jpg"
     course.save
 
     visit "/courses/#{course.id}"
 
-    expect(page).to have_css("label", text: "Image")
+    expect(page).to have_css("label", text: "Title")
   end
 end
 
@@ -181,7 +180,6 @@ describe "/courses/[COURSE ID]" do
     course.title = "Calculus"
     course.term_offered = "Winter"
     course.department_id = department.id
-    course.image = "https://some.test/image-#{Time.now.to_i}.jpg"
     course.save
 
     visit "/courses/#{course.id}"
@@ -191,7 +189,7 @@ describe "/courses/[COURSE ID]" do
 end
 
 describe "/courses/[COURSE ID]" do
-  it "'Update course' form has Image prepopulated in an input element", :points => 1, hint: h("value_attribute") do
+  it "'Update course' form has Title prepopulated in an input element", :points => 1, hint: h("value_attribute") do
 
     department = Department.new
     department.name = "Math"
@@ -201,17 +199,16 @@ describe "/courses/[COURSE ID]" do
     course.title = "Calculus"
     course.term_offered = "Winter"
     course.department_id = department.id
-    course.image = "https://some.test/image-#{Time.now.to_i}.jpg"
     course.save
 
     visit "/courses/#{course.id}"
 
-    expect(page).to have_css("input[value='#{course.image}']")
+    expect(page).to have_css("input[value='#{course.title}']")
   end
 end
 
 describe "/courses/[COURSE ID]" do
-  it "'Update course' form updates Image when submitted", :points => 1, hint: h("label_for_input button_type") do
+  it "'Update course' form updates Title when submitted", :points => 1, hint: h("label_for_input button_type") do
 
     department = Department.new
     department.name = "Math"
@@ -221,18 +218,17 @@ describe "/courses/[COURSE ID]" do
     course.title = "Calculus"
     course.term_offered = "Winter"
     course.department_id = department.id
-    course.image = "https://some.test/image-#{Time.now.to_i}.jpg"
     course.save
 
-    new_image = "https://some.test/image-1.jpg"
+    new_title = "Algebra"
 
     visit "/courses/#{course.id}"
-    fill_in "Image", with: new_image
+    fill_in "Title", with: new_title
     click_on "Update course"
 
-    course_as_revised = course.find(course.id)
+    course_as_revised = Course.find(course.id)
 
-    expect(course_as_revised.image).to eq(new_image)
+    expect(course_as_revised.title).to eq(new_title)
   end
 end
 
@@ -247,13 +243,12 @@ describe "/courses/[COURSE ID]" do
     course.title = "Calculus"
     course.term_offered = "Winter"
     course.department_id = department.id
-    course.image = "https://some.test/image-#{Time.now.to_i}.jpg"
     course.save
 
-    new_image = "https://some.test/image-1.jpg"
+    new_title = "Algebra"
 
     visit "/courses/#{course.id}"
-    fill_in "Image", with: new_image
+    fill_in "Title", with: new_title
     click_on "Update course"
 
     expect(page).to have_current_path("/courses/#{course.id}")
