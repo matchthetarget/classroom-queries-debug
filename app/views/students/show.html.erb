@@ -112,9 +112,11 @@
   <% enrollments.each do |enrollment| %>
     <li>
       <% course = Course.where({ :id => enrollment.course_id }).at(0) %>
-      <a href="/courses/<%= course.id %>">
-        <%= course.title %>
-      </a>
+      <% if course.present? %>
+        <a href="/courses/<%= course.id %>">
+          <%= course.title %>
+        </a>
+      <% end %>
     </li>
   <% end %>
 </ul>
