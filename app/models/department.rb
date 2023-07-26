@@ -8,4 +8,5 @@
 #  updated_at :datetime         not null
 #
 class Department < ApplicationRecord
+  has_many :courses, dependent: :destroy
 end

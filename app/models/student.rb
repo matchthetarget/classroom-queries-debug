@@ -10,4 +10,5 @@
 #  updated_at :datetime         not null
 #
 class Student < ApplicationRecord
+  has_many :enrollments, dependent: :destroy
 end
