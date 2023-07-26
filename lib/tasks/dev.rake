@@ -103,4 +103,6 @@ task({ :sample_data => :environment }) do
   ]
   Enrollment.delete_all
   Enrollment.insert_all!(enrollments)
+
+  puts "Sample data generated!"
 end
