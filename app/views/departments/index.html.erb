@@ -1,47 +1,40 @@
-<div class="row mb-3">
-  <div class="col-md-12">
-    <h1>
-      List of all departments
-    </h1>
-  </div>
-</div>
+<h1>
+  List of all departments
+</h1>
 
 <hr>
-<div class="row mb-3">
-  <div class="col-md-12">
-    <table class="table" border="1">
-      <tr>
-        <th>
-          ID
-        </th>
 
-        <th>
-          Name
-        </th>
+<table class="table" border="1">
+  <tr>
+    <th>
+      ID
+    </th>
 
-        <th>
-        </th>
-      </tr>
+    <th>
+      Name
+    </th>
 
-      <% @departments.each do |department| %>
-      <tr>
-        <td>
-          <%= department.id %>
-        </td>
+    <th>
+    </th>
+  </tr>
 
-        <td>
-          <%= department.name %>
-        </td>
+  <% @departments.each do |department| %>
+    <tr>
+      <td>
+        <%= department.id %>
+      </td>
 
-        <td>
-          <a href="/departments/<%= department.id %>">
-            Show details
-          </a>
-        </td>
-      </tr>
-      <% end %>
-    </table>
-  </div>
-</div>
+      <td>
+        <%= department.name %>
+      </td>
+
+      <td>
+        <a href="/departments/<%= department.id %>">
+          Show details
+        </a>
+      </td>
+    </tr>
+  <% end %>
+</table>
 
 <hr>
