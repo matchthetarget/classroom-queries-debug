@@ -45,7 +45,7 @@ describe "/courses" do
     visit "/courses"
 
     fill_in "Title", with: test_title
-    select department.name, from: 'department_id_box'
+    select department.name, from: 'Department'
     click_on "Create course"
     final_number_of_courses = Course.count
     expect(final_number_of_courses).to eq(initial_number_of_courses + 1)
@@ -65,7 +65,7 @@ describe "/courses" do
     visit "/courses"
 
     fill_in "Title", with: test_title
-    select department.name, from: 'department_id_box'
+    select department.name, from: 'Department'
     click_on "Create course"
 
     last_course = Course.order(created_at: :asc).last
